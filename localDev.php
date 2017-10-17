@@ -105,19 +105,18 @@ function fun_curl_post($url,$params,$cookies = []){
 class testClass implements Iterator{
 
 	private $position;
-
+	private $params = [];
+	private $property_names = [];
 	public function __construct($variables){
 
-		foreach($variables as $key=>$value){
-			$this->$key = $value;
-		}
+		$this->params = $variables;
 		$this->property_names = array_keys($variables);
 		$this->position = 0;
 	}
 
 	public function current (){
 		$property_name = $this->property_names[$this->position];
-		return $this->$property_name;
+		return $this->params[$property_name];
 	}
 	public function key (){
 	    $property_name = $this->property_names[$this->position];
@@ -129,7 +128,7 @@ class testClass implements Iterator{
 			return null;
 		}else{
 			$property_name = $this->property_names[$this->position];
-			return $this->$property_name;
+			return $this->params[$property_name];
 		}
 	}
 	public function rewind (){
