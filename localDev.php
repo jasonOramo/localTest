@@ -104,14 +104,14 @@ function fun_curl_post($url,$params,$cookies = []){
 
 class testClass implements Iterator{
 
-	private $property_names = ['a','b','c'];
-	private $a,$b,$c;
 	private $position;
 
-	public function __construct($a,$b,$c){
-		$this->a = $a;
-		$this->b = $b;
-		$this->c = $c;
+	public function __construct($variables){
+
+		foreach($variables as $key=>$value){
+			$this->$key = $value;
+		}
+		$this->property_names = array_keys($variables);
 		$this->position = 0;
 	}
 
@@ -120,7 +120,8 @@ class testClass implements Iterator{
 		return $this->$property_name;
 	}
 	public function key (){
-		return $this->position;
+	    $property_name = $this->property_names[$this->position];
+		return $property_name;
 	}
 	public function next (){
 		++$this->position;
@@ -139,7 +140,7 @@ class testClass implements Iterator{
 	}
 }
 
-$abc = new testClass(10,20,30);
+$abc = new testClass(['a'=>10,'b'=>20,'c'=>30]);
 foreach($abc as $key=>$value){
 	echo $key,$value;
 }
