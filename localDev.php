@@ -99,3 +99,47 @@ function fun_curl_post($url,$params,$cookies = []){
 	return json_encode($result);
 }
 
+
+
+
+class testClass implements Iterator{
+
+	private $property_names = ['a','b','c'];
+	private $a,$b,$c;
+	private $position;
+
+	public function __construct($a,$b,$c){
+		$this->a = $a;
+		$this->b = $b;
+		$this->c = $c;
+		$this->position = 0;
+	}
+
+	public function current (){
+		$property_name = $this->property_names[$this->position];
+		return $this->$property_name;
+	}
+	public function key (){
+		return $this->position;
+	}
+	public function next (){
+		++$this->position;
+		if($this->position >= count($this->property_names)){
+			return null;
+		}else{
+			$property_name = $this->property_names[$this->position];
+			return $this->$property_name;
+		}
+	}
+	public function rewind (){
+		$this->position = 0;
+	}
+	public function valid (){
+		return ($this->position < count($this->property_names));
+	}
+}
+
+$abc = new testClass(10,20,30);
+foreach($abc as $key=>$value){
+	echo $key,$value;
+}
