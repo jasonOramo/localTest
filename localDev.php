@@ -89,7 +89,7 @@ function fun_curl_post($url,$params,$cookies = []){
 	if($result == false){
 		$result = array('code'=> 1, 'message'=>curl_error($oCurl),'result'=>NULL);
 	}else{
-		$httpCode  = curl_getinfo($oCurl);
+		$httpCode  = curl_getinfo($oCurl,CURLINFO_HTTP_CODE);
 		if($httpCode != 200){
 			$result = array('code'=> 2, 'message'=>curl_error($iCurl),'result'=>NULL);
 		}else{
