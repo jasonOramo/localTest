@@ -68,3 +68,27 @@ function getUploadImagesName($prefix){
 		return $name;
 	}
 }
+
+/**
+* 
+*/
+function fun_curl_post($url,$params){
+	$oCurl = curl_init();
+	curl_setopt($oCurl, CURLOPT_POST, 1);
+	curl_setopt($oCurl, CURLOPT_URL, $url);
+	curl_setopt($oCurl, CURLOPT_POSTFIELDS, array_encode($params))
+	curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER,0);
+	$curlRes = curl_exec($oCurl);
+	if($result == false){
+		$result = array('code'=> 1, 'message'=>curl_error($oCurl),'result'=>NULL);
+	}else{
+		$httpCode  = curl_getinfo($oCurl);
+		if($httpCode != 200){
+			$result = array('code'=> 2, 'message'=>curl_error($iCurl),'result'=>NULL);
+		}else{
+			$result = array('code'=> 0, 'message'=> '', 'result'=>$curlRes);
+		}
+	}
+	return json_encode($result);
+}	   
