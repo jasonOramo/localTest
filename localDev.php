@@ -187,7 +187,7 @@ function fun_sock_get($url,$params,$cookies=[]){
 }
 
 
-//$abc = fun_sock_get('http://192.168.83.35',['username'=>'15921526038','password'=>'123456a']);
+$abc = fun_sock_get('http://192.168.83.35',['username'=>'15921526038','password'=>'123456a']);
 
 
 class testClass implements Iterator{
@@ -231,3 +231,36 @@ class testClass implements Iterator{
 // foreach($abc as $key=>$value){
 // 	echo $key,$value;
 // }
+
+
+function testAbc($testStr){
+	$fileName = 'abc.txt';
+	$oFile = @fopen($fileName, 'r');
+	$previousLine = '';
+	$result = [];
+	$lineNum = 1;
+	while(!feof($oFile)){
+		$line = fgets($oFile,4096);
+		echo $line;
+		$matchLine = $previousLine.$line;
+		$tempRes = [];
+		$tempHashKeys = [];
+		for($i = 0; $i < strlen($line); $i++){
+			$tempPos = stripos($line,$testStr,$i);
+			if($tempPos > -1){
+				if(!isset($tempHashKeys[$tempPos])){
+					$tempHashKeys[$tempPos] = 1;
+					array_push($tempRes,$tempPos);
+				}
+			}
+		}
+		if(count($tempRes) > 0){
+			$result[$lineNum] = $tempRes;
+		}
+		$lineNum++;
+	}
+	fclose($oFile);
+	return $result;
+}
+
+$oTest = testAbc('abc');
