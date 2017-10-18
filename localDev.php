@@ -264,3 +264,20 @@ function testAbc($testStr){
 }
 
 $oTest = testAbc('abc');
+
+
+// JS encodeURIComponent('a/b_c-f:d c')
+// JS encodeURI('a/b_c-f:d c')
+echo urldecode('a%2Fb_c-f%3Ad%20c');
+echo rawurldecode('a%2Fb_c-f%3Ad%20c');
+$abc = rawurlencode('a/b_c-f!f:d c');
+
+/**
+* get the str that JS could use decodeURIComponent to get the real string, while the rawurldecode could understarnd the !*'() sysmbol
+*/
+function getJSEncoded($str){
+	$revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+	$result = strtr(rawurlencode($str), $revert);
+	return $result;
+}
+
