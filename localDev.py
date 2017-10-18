@@ -6,7 +6,9 @@ def findStr(testStr):
 	findStr = '(?=' + testStr + ')'
 	lineNum = 1
 	for lineStr in iter(oFile):
-		tempResult = [m.start() for m in re.finditer(findStr, lineStr)]
+		#tempResult = [m.start() for m in re.finditer(findStr, lineStr)]
+		## use startswith instead of re generator for easy understanding
+		tempResult = [i for i in range(len(lineStr)) if lineStr.startswith(testStr,i)]
 		if len(tempResult) > 0:
 			result[lineNum] = tempResult
 		lineNum += 1
