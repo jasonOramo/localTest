@@ -1,9 +1,9 @@
 <?php 
 
-define(MAX_UPLOAD_FILE_SIZE, 10000);
-define(MAX_WIDTH,1000);
-define(MAX_HEIGHT,1000);
-define(UPLOAD_FOLDER,'../uploads/images/');
+define('MAX_UPLOAD_FILE_SIZE', 10000);
+define('MAX_WIDTH',1000);
+define('MAX_HEIGHT',1000);
+define('UPLOAD_FOLDER','../uploads/images/');
 
 function checkWritable($input){
 	if(is_dir($checkWritable)){
@@ -153,13 +153,14 @@ function fun_sock_get($url,$params,$cookies=[]){
 	$host = $urlPieces['host'];
 	$port = !isset($urlPieces['port']) ? '80' : $urlPieces['port'];
 	$path = !isset($urlPieces['path'] ) ? $url.'/' : $urlPieces['path'];
-	$sBreakLine = '\r\n';
+	$sBreakLine = "\r\n";
 	$sRequest  = 'GET '.$url.' HTTP/1.1'.$sBreakLine;
 	$sRequest .= 'User-Agent: Mozilla/5.0'.$sBreakLine;
 	$sRequest .= 'Host: '.$host.$sBreakLine;
+	$sRequest .= 'Origin: 127.0.0.1'.$sBreakLine;
 	$sRequest .= 'Accept: text/html'.$sBreakLine;
 	$sRequest .= 'Accept-lanaguage: zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4'.$sBreakLine;
-	$sRequest .= 'Accept-Encoding: gzip, deflate, sdch'.$sBreakLine;
+	//$sRequest .= 'Accept-Encoding: gzip, deflate, sdch'.$sBreakLine;
 	$sRequest .= 'Connection: close'.$sBreakLine.$sBreakLine;
 	$sParams = '';
 	$cookieVal = '';
@@ -176,6 +177,8 @@ function fun_sock_get($url,$params,$cookies=[]){
 		echo $errno, $errStr;
 		return null;
 	}else{
+		$sRequest .= $sBreakLine.$sBreakLine;
+		var_dump($sRequest);
 		fputs($oSock,$sRequest);
 		$ret = '';
 		while(!@feof($oSock)){
@@ -187,8 +190,7 @@ function fun_sock_get($url,$params,$cookies=[]){
 }
 
 
-$abc = fun_sock_get('http://192.168.83.35',['username'=>'15921526038','password'=>'123456a']);
-
+$abc = fun_sock_get('http://127.0.0.1/',['username'=>'15921526038','password'=>'123456a']);
 
 class testClass implements Iterator{
 
