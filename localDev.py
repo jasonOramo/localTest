@@ -100,5 +100,24 @@ b.next.next = ListNode(4)
 res = abc.addTwoNumbers(a,b)
 print res[0].val,res[0].next.val
 
-
-
+#https://leetcode.com/problems/generate-parentheses/description/
+class Solution2(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        result = []
+        self._getParenthesis(n,n,"",result)
+        return result
+        
+    def _getParenthesis(self,leftLNum,leftRNum,inputS,result):
+        if leftLNum > leftRNum:
+            return
+        if leftRNum == 0 and leftLNum == 0:
+            result.append(inputS)
+            return
+        if leftLNum > 0:
+            self._getParenthesis(leftLNum -1, leftRNum,inputS+"(",result)
+        if leftRNum > 0:
+            self._getParenthesis(leftLNum, leftRNum -1,inputS+")",result)
