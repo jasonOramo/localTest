@@ -90,6 +90,31 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
     return &eleArr[0];
 }
+/**
+*https://leetcode.com/problems/generate-parentheses/description/
+*/
+func generateParenthesis(n int) []string {
+    res := [] string{};
+    res = getValidRes(n,n,"",res);
+    return res;
+}
+
+func getValidRes(leftL int, leftR int, inputStr string, res []string) [] string {
+    if leftL > leftR {
+        return res;
+    }
+    if leftL == 0 && leftR == 0 {
+        res = append(res,inputStr);
+        return res;
+    }
+    if leftL > 0{
+        res = getValidRes(leftL -1 , leftR, inputStr + "(", res);
+    }
+    if leftR > 0{
+        res = getValidRes(leftL , leftR -1, inputStr + ")", res);
+    }
+    return res;
+}
 func main(){
   
 }
