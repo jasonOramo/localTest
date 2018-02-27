@@ -121,3 +121,32 @@ class Solution2(object):
             self._getParenthesis(leftLNum -1, leftRNum,inputS+"(",result)
         if leftRNum > 0:
             self._getParenthesis(leftLNum, leftRNum -1,inputS+")",result)
+
+#https://leetcode.com/problems/remove-element/description/
+class SolutionRemove(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+        i = len(nums) -1
+        j = 0
+        while j < i:
+            if nums[i] == val :
+                i = i - 1
+            else:
+                if nums[j] == val :
+                    tempVal = nums[j]
+                    nums[j] = nums[i]
+                    nums[i] = tempVal
+                    i = i -1
+                    j = j + 1
+                else:
+                    j = j + 1
+        if(nums[j] == val):
+            return j
+        else:
+            return j + 1

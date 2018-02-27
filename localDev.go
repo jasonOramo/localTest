@@ -118,3 +118,32 @@ func getValidRes(leftL int, leftR int, inputStr string, res []string) [] string 
 func main(){
   
 }
+
+//https://leetcode.com/problems/remove-element/description/
+func removeElement(nums []int, val int) int {
+    if(len(nums) == 0){
+        return 0;
+    }
+    i := len(nums) - 1
+    j := 0
+    for j < i {
+        if nums[i] == val{
+            i --;
+        }else{
+            if(nums[j] == val){
+                tempVal := nums[i]
+                nums[i] = nums[j]
+                nums[j] = tempVal
+                j++
+                i--
+            }else{
+                j++
+            }
+        }
+    }
+    if nums[j] == val {
+        return j
+    }else{
+        return j+1;
+    }
+}
