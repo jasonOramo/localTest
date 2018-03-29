@@ -32,7 +32,7 @@ func reverse(x int) int {
  */
  
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-        var current ListNode;
+    var current ListNode;
     var nextL1, nextL2 *ListNode;
     var tempVal,nextVal,addVal,smallVal,largerLength,smallerLength int;
     var l1Vals,l2Vals,larger,smaller []int;
@@ -145,5 +145,43 @@ func removeElement(nums []int, val int) int {
         return j
     }else{
         return j+1;
+    }
+}
+
+//https://leetcode.com/problems/combination-sum/description/
+func combinationSum(candicate []int, target int) [][]int{
+    sort.Ints(candicate)
+    var result [][]int
+    if(len(candicate) == 0 ){
+        return result;
+    }else{
+        tempResult := []int{}
+         _getCombination(candicate, &result, tempResult,0,target)
+    }
+    return result
+
+}
+
+func _getCombination(nums []int, result *[][]int, tempResult []int, fromIndex int, currentTarget int){
+    tempV := tempResult[:len(tempResult)]
+    if(currentTarget == 0){
+        tempR := []int{}
+        for _, val := range tempV {
+            tempR = append(tempR, val)
+        }
+        *result = append(*result,tempR)
+    }else{
+        if currentTarget > 0 {
+            for i := fromIndex; i < len(nums); i++ {
+                if(currentTarget - nums[i] < 0){
+                    break;
+                }
+                tempV = append(tempV, nums[i])
+                _getCombination(nums, result, tempV, i , currentTarget - nums[i])
+                tempV = tempV[:len(tempV)-1]
+            }
+        }else{
+            return
+        }
     }
 }
