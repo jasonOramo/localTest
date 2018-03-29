@@ -150,3 +150,29 @@ class SolutionRemove(object):
             return j
         else:
             return j + 1
+
+#https://leetcode.com/problems/combination-sum/description/
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        result = []
+        candidates = sorted(candidates)
+        self._getCombi(result,[],candidates,0,target)
+        return result
+    def _getCombi(self,result,tempVals,nums,fromIndex,reminder):
+        if reminder == 0:
+            result.append(tempVals[:])
+            return
+        elif reminder < 0:
+            return
+        else:
+            for i in range(fromIndex,len(nums)):
+                if(reminder - nums[i] < 0):
+                    break;
+                tempVals.append(nums[i])
+                self._getCombi(result,tempVals, nums, i, reminder-nums[i])
+                tempVals.pop()
