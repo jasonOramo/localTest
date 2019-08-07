@@ -85,3 +85,54 @@ var maxProfitNew = function(k, prices) {
     }
     return dp[dp.length-1].pop()||0;
 };
+/*Heap sort*/
+function heapSort(arr){
+    
+    let heap = arr.slice(0);
+    const iLength = heap.length;
+    const iLastParent = parseInt(iLength /2 - 1);
+    //build the first max heap;
+    for(let i = iLastParent ; i > -1; i--){
+        heap = adjustHeap(heap.slice(0),i,iLength -1);
+    }
+    //sort the values
+    for(let i = iLength - 1; i > 0 ; i --){
+        [heap[0],heap[i]] = swap([heap[0],heap[i]]);
+        heap = adjustHeap(heap.slice(0),0, i - 1);
+    }
+
+
+    return heap;
+}
+
+function swap([a,b]){
+    return [b,a];
+
+}
+
+function adjustHeap(arr,start,end){
+    let i = start,  left, right, iChange,checkVal;
+    let res = arr.slice(0);
+    while( i < end ){
+        left = i * 2 + 1;
+        right = i * 2 + 2;
+        checkVal = res[i];
+
+        if(right <= end && res[right] > checkVal){
+            iChange = right;
+            checkVal = res[right];
+        }
+        if(left <= end && res[left] > checkVal){
+            iChange = left;
+        }
+        if(iChange !== i && !!iChange){
+            [res[i],res[iChange]] = swap([res[i],res[iChange]]);
+            i = iChange;
+        }else{
+           break;
+        }
+    }
+    return res;
+}
+
+
