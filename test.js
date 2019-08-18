@@ -135,4 +135,37 @@ function adjustHeap(arr,start,end){
     return res;
 }
 
+function crossRiver(nums){
+    var res = 0;
 
+    var needCross = nums.sort((a,b)=>{return a-b;});
+    var iLength = needCross.length;
+    var iNeed =  iLength, l = 0, r = iLength -1;
+    while(r > -1){
+        if(r === 0){
+            res += needCross[l];
+            r = -1;
+            break; 
+        }else if(r === 1){
+            res += needCross[l] + needCross[r];
+            r = -1;
+            break;
+        }else if(r === 2){
+            res += needCross[l] + needCross[l + 1] + needCross[r];
+            r = -1;
+            break;
+        }else{
+            //use the smallest as switcher
+            let iSmall = 2 * needCross[l] + needCross[r-1] + needCross[r];
+            let iTwoSwitch = needCross[l] + 2 * needCross[l+1] + needCross[r];
+            if(iSmall < iTwoSwitch){
+                res += iSmall;
+            }else{
+                res += iTwoSwitch;
+            }
+            r = r - 2;
+        }
+
+    }
+    return res;
+}
